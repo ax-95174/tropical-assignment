@@ -6,3 +6,4 @@ seaborn
 ortools
 geopandas
 contextily
+pytest
