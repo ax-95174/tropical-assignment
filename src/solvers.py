@@ -104,7 +104,7 @@ def tropsubsetDPassignment(X) :
 
 # make a version of tropical subset dp that ignores entries larger than M = 999
 def forbiddentropsubsetDPassignment(X, M = 999) :
-    """Solve the assignment problem using sparsity-aware tropical subset DP"""
+    """Solve sparse assignment; return [inf, {}] if no assignment is feasible."""
      # takes a matrix X and returns the minimal cost and the assignment that gets you there
     storedvalues = {} # this is going to be a dictionary of stored F(S) values as we compute them
     choice = {} ## remembering index choices
@@ -141,6 +141,9 @@ def forbiddentropsubsetDPassignment(X, M = 999) :
 
     S = frozenset(range(len(X))) #start with the full set 
     cost = F(S)
+
+    if cost == math.inf:
+        return [cost, {}]
 
     while len(S) > 0:
         j = choice[S] #get the assignment of the last row 
@@ -190,7 +193,7 @@ def MIPassignment(costs):
                         # Test if x[i,j] is 1 (with tolerance for floating point arithmetic).
                         if x[i, j].solution_value() > 0.5:
                             indices.append([i,j])   
-        return [np.int64(solver.Objective().Value()), np.array(indices)]
+        return [solver.Objective().Value(), np.array(indices)]
         
     else:
         print("No solution found.")
@@ -235,7 +238,7 @@ def LPassignment(costs):
                         # Test if x[i,j] is 1 (with tolerance for floating point arithmetic).
                         if x[i, j].solution_value() > 0.5:
                             indices.append([i,j])   
-        return [np.int64(solver.Objective().Value()), np.array(indices)]
+        return [solver.Objective().Value(), np.array(indices)]
         
     else:
         print("No solution found.")

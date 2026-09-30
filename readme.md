@@ -152,3 +152,11 @@ Install dependencies with:
 ```
 
 See [`data/README.md`](data/README.md) for instructions on obtaining and preparing the Chicago taxi data.
+
+## Running tests
+
+After installing dependencies, run the solver regression tests from the repository root:
+
+```bash
+python -m pytest -q
+```
